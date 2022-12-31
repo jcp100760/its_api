@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Resources;
+use App\Models\Proffessor;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\Materia;
 
-class MateriaResource extends JsonResource
+class ProffessorResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +16,11 @@ class MateriaResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'nombre' => $this->nombre,
-            'descripcion' => $this->descripcion,
+            'name' => $this->name,
+            'lastname' => $this->lastname,
+            'ci' => $this->ci,
+            'active' => $this->active,
+            'matters' => MatterProfResource::collection($this->whenLoaded('matters')),            
          ];
     }
 }

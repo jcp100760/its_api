@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Matter;
 
 use App\Models\Matter;
 use App\Http\Resources\MatterResource;
@@ -13,23 +13,18 @@ class MatterRepository extends BaseRepository
         return new Matter();
     }
 
-    public function getAll()                         //probado funciona
-    {
-         return MatterResource::collection(Matter::with(['proffessors'])->get());
-    }
-
     public function getMatterByDescription($description)
     {
-        $matterDescription = $this->getModel()->where('description', 'like',  '%' . $description. '%' )->get();
+        $matterDescription = $this->model->where('description', 'like',  '%' . $description. '%' )->get();
         return MatterResource::collection($matterDescription);
     }
 
     public function getMatterByNameDescription($search)
     {
-        $matterNameDescription = $this->getModel()
+        $matterNameDescription = $this->model
             ->where('name', 'like',  '%' . $search . '%')
             ->orWhere('description', 'like',  '%' . $search . '%')
-            ->orderBy('name', 'asc')->get();
+            ->orderBy('name', 'asc');
         return MatterResource::collection($matterNameDescription);
     }
 

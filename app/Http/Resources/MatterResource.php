@@ -11,7 +11,8 @@ class MatterResource extends JsonResource{
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'description' => $this->description,            
+            'description' => $this->description, 
+            'proffessors' => MatterProfResource::collection($this->whenLoaded('proffessors')),           
          ];
     }
 }

@@ -2,55 +2,63 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\matterRequest;
+use App\Repositories\MatterRepository;
 use App\Http\Resources\MatterResource;
-use App\Interfaces\MatterRepositoryInterface;   //
 use App\Models\Matter;
+use Error;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+
 class MatterController extends Controller
 {
-    //
+    protected $matter;
     public $matterRepository;
 
-    public function __construct(MatterRepositoryInterface $matterRepository) 
+    public function __construct(MatterRepository $matterRepository, Matter $matter) 
     {
         $this->matterRepository = $matterRepository;
+        $this->matter = $matter;
     }
-    //
+    
     public function index()
     {
-       return $this->matterRepository->getAllMatters();
+       return MatterResource::collection($this->matterRepository->getAll());
     }
 
-    public function store(Request $request)
+    public function store(matterRequest $request)
     {
-        $matter = new Matter();
-        $matter->description = $request->description;
-        $matter->name = $request->name;
-        $matter->save();
-    }
+        return $this->matterRepository->create($request);
+     }
 
     public function show(Matter $matter)
     {
-
-        return $this->matterRepository->getMatterById($matter);
+        return MatterResource::collection($this->matterRepository->getById($matter));
     }
 
-    public function update(Request $request, Matter $matter)
+    public function update( $id, matterRequest $request)
     {
-        //
+        try{
+           return $this->matterRepository->update($id, $request);
+        }
+        catch(Exception $e){
+            return response()->json([
+                'message'=> 'No se pudo actualizar el registro'
+            ],404);
+        }
     }
 
-    public function destroy(Matter $matter)
+    public function destroy($id)
     {
-        //
+        return $this->matterRepository->delete($id);
     }
 
     public function findName($name)
     {
-       return $this->matterRepository->getMatterByName($name);
+       return MatterResource::collection($this->matterRepository->getByName($name));
     }
 
     public function findDescription($description)
