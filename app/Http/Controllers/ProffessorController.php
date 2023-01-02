@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProffessorRequest;
 use App\Repositories\ProffessorRepository;
-use App\Http\Resources\ProffessorResource;
+//use App\Http\Resources\ProffessorResource;
 use App\Models\Proffessor;
-use App\Models\Matter;
+//use App\Models\Matter;
 use Error;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -27,12 +27,13 @@ class ProffessorController extends Controller
 
     public function index()
     {
-       return ProffessorResource::collection($this->proffessorRepository->getAll());
+       //return ProffessorResource::collection($this->proffessorRepository->getAll());
+       return $this->proffessorRepository->getAll();
     }
     
     public function profmat()
     {
-        return ProffessorResource::collection($this->proffessorRepository->getAllByMatters());
+        return $this->proffessorRepository->getAllByMatters();
         
     }
 
@@ -43,10 +44,10 @@ class ProffessorController extends Controller
 
     public function show(Proffessor $proffessor)
     {
-       return ProffessorResource::collection($this->proffessorRepository->getById($proffessor));
+       return $this->proffessorRepository->getById($proffessor);
     }
 
-    public function update( $id, proffessorRequest $request)
+    public function update( $id, Request $request)
     {
         try{
            return $this->proffessorRepository->update($id, $request);
@@ -65,22 +66,22 @@ class ProffessorController extends Controller
 
     public function getCi($ci)
     {
-        return ProffessorResource::collection($this->proffessorRepository->getByCi($ci));
+        return $this->proffessorRepository->getByCi($ci);
     }
 
     public function findName($name)
     {
-       return ProffessorResource::collection($this->proffessorRepository->getByName($name));
+       return $this->proffessorRepository->getByName($name);
     }
 
     public function findLastName($lastname)
     {
-        return ProffessorResource::collection($this->proffessorRepository->getProffessorByLastName($lastname));
+        return $this->proffessorRepository->getProffessorByLastName($lastname);
     }
 
     public function findNameLastname($search)
     {
-        return ProffessorResource::collection($this->proffessorRepository->getProffessorByNameLastname($search));
+        return $this->proffessorRepository->getProffessorByNameLastname($search);
     }
 
     

@@ -21,7 +21,6 @@ class Proffessor extends Model
 
     public function matters()
     {
-        //Matter::class, 'specialty','matterId','proffessorId'
         return $this->belongsToMany(Matter::class,'specialty', 'proffessorId','matterId' );
     }
 }

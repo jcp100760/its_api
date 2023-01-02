@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Proffessor;
-use App\Http\Resources\ProffessorResource;
+//use App\Http\Resources\ProffessorResource;
 use App\Repositories\BaseRepository;
 
 class ProffessorRepository extends BaseRepository
@@ -13,21 +13,22 @@ class ProffessorRepository extends BaseRepository
         return new Proffessor();
     }
 
-    public function getAllByMatters()                         //probado funciona
+    public function getAllByMatters()                                       //probado funciona
     {
-         return ProffessorResource::collection(Proffessor::with(['matters'])->get());
+        return $this->getModel()->with(['matters'])->get();
     }
 
-    public function getByCi($ci)
+    public function getByCi($ci)                                            //probado funciona
     {
         $data = $this->getModel()->where('ci', '=', $ci)->get(); 
-        return $data;           //probado funciona
+        return $data;           
     }
 
     public function getProffessorByLastName($lastname)
     {
-        $proffessorLastname = $this->getModel()->where('lastname', 'like', '%' .$lastname. '%')->get();
-        return ProffessorResource::collection($proffessorLastname);
+        // $proffessorLastname = $this->getModel()->where('lastname', 'like', '%' .$lastname. '%')->get();
+        // return ProffessorResource::collection($proffessorLastname);
+        return $this->getModel()->where('lastname', 'like', '%' .$lastname. '%')->get();
     }
 
     public function getProffessorByNameLastname($search)
@@ -36,10 +37,10 @@ class ProffessorRepository extends BaseRepository
             ->where('name', 'like',  '%' .$search. '%')
             ->orWhere('lastname', 'like',  '%' .$search. '%')
             ->orderBy('name', 'asc')->get();
-        return ProffessorResource::collection($proffessorNameLastname);
+        return $proffessorNameLastname;
     }
 
-    public function ProffessorMatterRelation()
+    public function proffessorMatterRelation()
     {
         return true;
     }

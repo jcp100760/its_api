@@ -1,6 +1,6 @@
 <?php
 use App\Http\Controllers\MatterController;
-use App\Http\Controllers\proffessorController;
+use App\Http\Controllers\ProffessorController;
 use App\Http\Controllers\TurnController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;

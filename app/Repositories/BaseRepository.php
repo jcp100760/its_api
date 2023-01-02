@@ -30,7 +30,6 @@ abstract class BaseRepository
 
     public function create($request)                    //probado funciona
     {
-        //return $this->getModel()->create($request->all());
         $this->getModel()->create($request->all());
         return response()->json([
             'message' => 'Registro creado exitosamente', 
@@ -49,8 +48,9 @@ abstract class BaseRepository
 
     public function getByName($name)
     {
-        $data = $this->getModel()->where('name', 'like',  '%' . $name. '%' )->get();
-        return $data;
+        // $data = $this->getModel()->where('name', 'like',  '%' . $name. '%' )->get();
+        // return $data;
+        return $this->getModel()->where('name', 'like',  '%' . $name. '%' )->get();
     }
 
 
