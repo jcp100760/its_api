@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProffessorRequest;
 use App\Repositories\ProffessorRepository;
-//use App\Http\Resources\ProffessorResource;
 use App\Models\Proffessor;
-//use App\Models\Matter;
+use App\Models\Matter;
 use Error;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -27,7 +26,6 @@ class ProffessorController extends Controller
 
     public function index()
     {
-       //return ProffessorResource::collection($this->proffessorRepository->getAll());
        return $this->proffessorRepository->getAll();
     }
     
@@ -82,6 +80,16 @@ class ProffessorController extends Controller
     public function findNameLastname($search)
     {
         return $this->proffessorRepository->getProffessorByNameLastname($search);
+    }
+
+    public function addRelation($id, Request $request)
+    {
+        return $this->proffessorRepository->proffessorMatterRelation($id, $request);
+    }
+
+    public function delRelation($id, Request $request)
+    {
+        return $this->proffessorRepository->proffessorDetachRelation($id, $request);
     }
 
     

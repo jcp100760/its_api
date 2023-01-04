@@ -13,7 +13,7 @@ class GroupRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,19 @@ class GroupRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'grade' => 'int|required',
+            'name' => 'string|min:2|max:255',
+            'description' => 'string|min:5|max:255',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'grade.required' => 'El campo nombre es requerido',
+            'grade.int' => 'Este campo es numerico',
+            'name.min' => 'El minimo de caracteres aceptado es 2',          
+            'description.min' => 'El minimo de caracteres aceptado es 5'
         ];
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\Proffessor;
-//use App\Http\Resources\ProffessorResource;
 use App\Repositories\BaseRepository;
 
 class ProffessorRepository extends BaseRepository
@@ -26,8 +25,6 @@ class ProffessorRepository extends BaseRepository
 
     public function getProffessorByLastName($lastname)
     {
-        // $proffessorLastname = $this->getModel()->where('lastname', 'like', '%' .$lastname. '%')->get();
-        // return ProffessorResource::collection($proffessorLastname);
         return $this->getModel()->where('lastname', 'like', '%' .$lastname. '%')->get();
     }
 
@@ -40,9 +37,26 @@ class ProffessorRepository extends BaseRepository
         return $proffessorNameLastname;
     }
 
-    public function proffessorMatterRelation()
+    public function proffessorMatterRelation($id, $request)
     {
-        return true;
+        $matterId = $request->matterId; 
+        $proffessor = $this->getModel()->find($id);
+        $proffessor->matters()->attach($matterId);
+        return response()->json([
+                'message' => 'Registro relacionado exitosamente', 
+                'code' => 200
+            ]); 
+    }
+
+    public function proffessorDetachRelation($id, $request)
+    {
+        $matter_id = $request->matterId; 
+         $proffessor = $this->getModel()->find($id);
+        $proffessor->matters()->detach($matter_id);
+        return response()->json([
+                'message' => 'Relacion borrada exitosamente', 
+                'code' => 200
+            ]); 
     }
 
 }

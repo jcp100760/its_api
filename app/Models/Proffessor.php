@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Proffessor extends Model
 {
     use HasFactory;
-    //protected $with = ['matters'];
+
     protected $table = 'proffessor';
     public $timestamps = false;
 

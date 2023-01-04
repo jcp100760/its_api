@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\matterRequest;
 use App\Repositories\MatterRepository;
-use App\Http\Resources\MatterResource;
 use App\Models\Matter;
 use Error;
 use Exception;
@@ -26,20 +25,20 @@ class MatterController extends Controller
     
     public function index()
     {
-       return MatterResource::collection($this->matterRepository->getAll());
+       return $this->matterRepository->getAll();
     }
 
-    public function store(matterRequest $request)
+    public function store(Request $request)
     {
         return $this->matterRepository->create($request);
      }
 
     public function show(Matter $matter)
     {
-        return MatterResource::collection($this->matterRepository->getById($matter));
+        return $this->matterRepository->getById($matter);
     }
 
-    public function update( $id, matterRequest $request)
+    public function update($id, Request $request)
     {
         try{
            return $this->matterRepository->update($id, $request);
@@ -58,19 +57,27 @@ class MatterController extends Controller
 
     public function findName($name)
     {
-       return MatterResource::collection($this->matterRepository->getByName($name));
+       return $this->matterRepository->getByName($name);
     }
 
     public function findDescription($description)
     {
-        $matterDescription = Matter::searchDescription($description)->get();
-        return MatterResource::collection($matterDescription);
+        return $this->matterRepository->getMatterByDescription($description);
     }
 
     public function findNameDescription($search)
     {
-        $matterNameDescription = Matter::searchNameDescription($search)->get();
-        return MatterResource::collection($matterNameDescription);
+        return $this->matterRepository->getMatterByNameDescription($search);
+    }
+
+    public function addRelation($id, Request $request)
+    {
+        return $this->matterRepository->matterProffessorRelation($id, $request);
+    }
+
+    public function delRelation($id, Request $request)
+    {
+        return $this->matterRepository->matterDetachRelation($id, $request);
     }
 
 }

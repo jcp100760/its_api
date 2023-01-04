@@ -13,15 +13,14 @@ class MatterRepository extends BaseRepository
         return new Matter();
     }
 
-    public function getAll()                         //probado funciona
+    public function getAllByProffessors()                                       //probado funciona
     {
-         return MatterResource::collection(Matter::with(['proffessors'])->get());
+        return $this->getModel()->with(['proffessors'])->get();
     }
 
     public function getMatterByDescription($description)
     {
-        $matterDescription = $this->getModel()->where('description', 'like',  '%' . $description. '%' )->get();
-        return MatterResource::collection($matterDescription);
+        return $this->getModel()->where('description', 'like',  '%' . $description. '%' )->get();
     }
 
     public function getMatterByNameDescription($search)
@@ -30,7 +29,29 @@ class MatterRepository extends BaseRepository
             ->where('name', 'like',  '%' . $search . '%')
             ->orWhere('description', 'like',  '%' . $search . '%')
             ->orderBy('name', 'asc')->get();
-        return MatterResource::collection($matterNameDescription);
+        return $matterNameDescription;
+    }
+
+    public function matterProffessorRelation($id, $request)
+    {
+        $proffessorId = $request->proffessorId; 
+        $matter = $this->getModel()->find($id);
+        $matter->proffessors()->attach($proffessorId);
+        return response()->json([
+                'message' => 'Registro relacionado exitosamente', 
+                'code' => 200
+            ]); 
+    }
+
+    public function matterDetachRelation($id, $request)
+    {
+        $proffessorId = $request->proffessorId; 
+         $matter = $this->getModel()->find($id);
+        $matter->proffessors()->detach($proffessorId);
+        return response()->json([
+                'message' => 'Relacion borrada exitosamente', 
+                'code' => 200
+            ]); 
     }
 
 }

@@ -15,6 +15,8 @@ Route::controller(MatterController::class)->group(function () {
     Route::get('/matterFindDescription/{description}', 'findDescription');
     Route::get('/matterFindNameDescription/{search}', 'findNameDescription');
     Route::get('/matterFindName/{name}', 'findName');
+    Route::post('/matterRel/{id}', 'addRelation');
+    Route::post('/matterDelRel/{id}', 'delRelation');
 });
 
 // Endpoints para la tabla Proffessor (Profesor)
@@ -29,6 +31,9 @@ Route::controller(ProffessorController::class)->group(function () {
     Route::get('/proffessorFindLastname/{lastname}', 'findLastname');
     Route::get('/proffessorFindNameLastname/{search}', 'findNameLastname');
     Route::get('/proffessorFindName/{name}', 'findName');
+    Route::post('/proffessorRel/{id}', 'addRelation');
+    Route::post('/proffessorDelRel/{id}', 'delRelation');
+
 });
 
 // Endpoints para la tabla Turn (Turno)
@@ -41,6 +46,17 @@ Route::controller(TurnController::class)->group(function () {
     Route::get('/turnFindName/{name}', 'findName');
 });
 
+// Endpoints para la tabla Group (Grupo)
+Route::controller(GroupController::class)->group(function () {
+    Route::get('/groupsIndex', 'index');
+    Route::post('/groupCreate', 'store');
+    Route::get('/groupView/{matter}', 'show');
+    Route::put('/groupUpdate/{id}', 'update');
+    Route::delete('/groupDelete/{id}', 'destroy');
+    Route::get('/groupFindDescription/{description}', 'findDescription');
+    Route::get('/groupFindNameDescription/{search}', 'findNameDescription');
+    Route::get('/groupFindName/{name}', 'findName');
+});
 
 // Route::controller(AbsenceController::class)->group(function () {
 //     Route::get('/absencesIndex', 'index');
@@ -58,16 +74,6 @@ Route::controller(TurnController::class)->group(function () {
 //     Route::delete('/gmpDelete/{id}', 'destroy');
 // });
 
-// Route::controller(GroupController::class)->group(function () {
-//     Route::get('/groupsIndex', 'index');
-//     Route::post('/groupCreate', 'store');
-//     Route::get('/groupView/{matter}', 'show');
-//     Route::put('/groupUpdate/{id}', 'update');
-//     Route::delete('/groupDelete/{id}', 'destroy');
-//     Route::get('/groupFindDescription/{description}', 'findDescription');
-//     Route::get('/groupFindNameDescription/{search}', 'findNameDescription');
-//     Route::get('/groupFindName/{name}', 'findName');
-// });
 
 // Route::controller(MgController::class)->group(function () {
 //     Route::get('/mgIndex', 'index');
