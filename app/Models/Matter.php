@@ -17,7 +17,7 @@ class Matter extends Model
         'description',
     ];
 
-    public function Proffessors()
+    public function proffessors()
     {
         return $this->belongsToMany(Proffessor::class,'specialty', 'matterId','proffessorId' );
     }

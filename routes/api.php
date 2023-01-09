@@ -17,6 +17,7 @@ Route::controller(MatterController::class)->group(function () {
     Route::get('/matterFindName/{name}', 'findName');
     Route::post('/matterRel/{id}', 'addRelation');
     Route::post('/matterDelRel/{id}', 'delRelation');
+    Route::get('/matterProffessor', 'matprof');
 });
 
 // Endpoints para la tabla Proffessor (Profesor)

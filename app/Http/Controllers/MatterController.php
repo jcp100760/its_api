@@ -55,6 +55,12 @@ class MatterController extends Controller
         return $this->matterRepository->delete($id);
     }
 
+    public function matprof()
+    {
+        return $this->matterRepository->getAllByProffessors();
+        
+    }
+
     public function findName($name)
     {
        return $this->matterRepository->getByName($name);
