@@ -1,31 +1,31 @@
 <?php
 
-namespace App\Repositories\Matter;
+namespace App\Repositories;
 
-use App\Models\Matter;
-use App\Http\Resources\MatterResource;
+use App\Models\Gmp;
+use App\Http\Resources\GmpResource;
 use App\Repositories\BaseRepository;
 
-class MatterRepository extends BaseRepository
+class GmpRepository extends BaseRepository
 {
     public function getModel()
     {
-        return new Matter();
+        return new Gmp();
     }
 
-    public function getMatterByDescription($description)
+    public function getGmpByDescription($description)
     {
-        $matterDescription = $this->model->where('description', 'like',  '%' . $description. '%' )->get();
-        return MatterResource::collection($matterDescription);
+        $gmpDescription = $this->getModel()->where('description', 'like',  '%' . $description. '%' )->get();
+        return GmpResource::collection($gmpDescription);
     }
 
-    public function getMatterByNameDescription($search)
+    public function getGmpByNameDescription($search)
     {
-        $matterNameDescription = $this->model
+        $gmpNameDescription = $this->getModel()
             ->where('name', 'like',  '%' . $search . '%')
             ->orWhere('description', 'like',  '%' . $search . '%')
             ->orderBy('name', 'asc');
-        return MatterResource::collection($matterNameDescription);
+        return GmpResource::collection($gmpNameDescription);
     }
 
 }

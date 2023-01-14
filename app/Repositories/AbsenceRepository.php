@@ -1,31 +1,31 @@
 <?php
 
-namespace App\Repositories\Matter;
+namespace App\Repositories;
 
-use App\Models\Matter;
-use App\Http\Resources\MatterResource;
+use App\Models\Absence;
+use App\Http\Resources\AbsenceResource;
 use App\Repositories\BaseRepository;
 
-class MatterRepository extends BaseRepository
+class AbsenceRepository extends BaseRepository
 {
     public function getModel()
     {
-        return new Matter();
+        return new Absence();
     }
 
-    public function getMatterByDescription($description)
+    public function getAbsenceByDescription($description)
     {
-        $matterDescription = $this->model->where('description', 'like',  '%' . $description. '%' )->get();
-        return MatterResource::collection($matterDescription);
+        $absenceDescription = $this->model->where('description', 'like',  '%' . $description. '%' )->get();
+        return AbsenceResource::collection($absenceDescription);
     }
 
-    public function getMatterByNameDescription($search)
+    public function getAbsenceByNameDescription($search)
     {
-        $matterNameDescription = $this->model
+        $absenceNameDescription = $this->model
             ->where('name', 'like',  '%' . $search . '%')
             ->orWhere('description', 'like',  '%' . $search . '%')
             ->orderBy('name', 'asc');
-        return MatterResource::collection($matterNameDescription);
+        return AbsenceResource::collection($absenceNameDescription);
     }
 
 }

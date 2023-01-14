@@ -1,31 +1,31 @@
 <?php
 
-namespace App\Repositories\Matter;
+namespace App\Repositories;
 
-use App\Models\Matter;
-use App\Http\Resources\MatterResource;
+use App\Models\Profile;
+use App\Http\Resources\ProfileResource;
 use App\Repositories\BaseRepository;
 
-class MatterRepository extends BaseRepository
+class ProfileRepository extends BaseRepository
 {
     public function getModel()
     {
-        return new Matter();
+        return new Profile();
     }
 
-    public function getMatterByDescription($description)
+    public function getProfileByDescription($description)
     {
-        $matterDescription = $this->model->where('description', 'like',  '%' . $description. '%' )->get();
-        return MatterResource::collection($matterDescription);
+        $profileDescription = $this->getModel()->where('description', 'like',  '%' . $description. '%' )->get();
+        return ProfileResource::collection($profileDescription);
     }
 
-    public function getMatterByNameDescription($search)
+    public function getProfileByNameDescription($search)
     {
-        $matterNameDescription = $this->model
+        $profileNameDescription = $this->getModel()
             ->where('name', 'like',  '%' . $search . '%')
             ->orWhere('description', 'like',  '%' . $search . '%')
             ->orderBy('name', 'asc');
-        return MatterResource::collection($matterNameDescription);
+        return ProfileResource::collection($profileNameDescription);
     }
 
 }

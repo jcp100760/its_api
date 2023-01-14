@@ -1,31 +1,31 @@
 <?php
 
-namespace App\Repositories\Matter;
+namespace App\Repositories;
 
-use App\Models\Matter;
-use App\Http\Resources\MatterResource;
+use App\Models\Mg;
+use App\Http\Resources\MgResource;
 use App\Repositories\BaseRepository;
 
-class MatterRepository extends BaseRepository
+class MgRepository extends BaseRepository
 {
     public function getModel()
     {
-        return new Matter();
+        return new Mg();
     }
 
-    public function getMatterByDescription($description)
+    public function getMgByDescription($description)
     {
-        $matterDescription = $this->model->where('description', 'like',  '%' . $description. '%' )->get();
-        return MatterResource::collection($matterDescription);
+        $mgDescription = $this->getModel()->where('description', 'like',  '%' . $description. '%' )->get();
+        return MgResource::collection($mgDescription);
     }
 
-    public function getMatterByNameDescription($search)
+    public function getMgByNameDescription($search)
     {
-        $matterNameDescription = $this->model
+        $mgNameDescription = $this->getModel()
             ->where('name', 'like',  '%' . $search . '%')
             ->orWhere('description', 'like',  '%' . $search . '%')
             ->orderBy('name', 'asc');
-        return MatterResource::collection($matterNameDescription);
+        return MgResource::collection($mgNameDescription);
     }
 
 }
